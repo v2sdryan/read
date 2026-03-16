@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一對一栽培廣東話讀本</title>
+    <style>
+        :root {
+            --bg: #f6efe2;
+            --paper: rgba(255, 251, 243, 0.92);
+            --paper-strong: #fff8ed;
+            --ink: #20313a;
+            --muted: #6d7168;
+            --accent: #c85b2c;
+            --accent-strong: #8f3915;
+            --accent-soft: rgba(200, 91, 44, 0.12);
+            --teal: #1d6a70;
+            --teal-soft: rgba(29, 106, 112, 0.12);
+            --line: rgba(70, 56, 39, 0.14);
+            --shadow: 0 24px 60px rgba(70, 45, 20, 0.12);
+            --radius-xl: 30px;
+            --radius-lg: 24px;
+            --radius-md: 18px;
+            --radius-sm: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(255, 255, 255, 0.88), transparent 36%),
+                radial-gradient(circle at top right, rgba(29, 106, 112, 0.12), transparent 24%),
+                linear-gradient(180deg, #f6efe2 0%, #f8f3ea 48%, #f2ead9 100%);
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.08) 25%, transparent 25%) 0 0 / 24px 24px,
+                linear-gradient(315deg, rgba(255, 255, 255, 0.08) 25%, transparent 25%) 0 0 / 24px 24px;
+            opacity: 0.22;
+        }
+
+        button,
+        summary {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "DFKai-SB", "BiauKai", "Kaiti TC", serif;
+            font-weight: 700;
+        }
+
+        .page {
+            width: min(100%, 880px);
+            margin: 0 auto;
+            padding: 24px 16px 80px;
+            position: relative;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 28px 22px 24px;
+            border-radius: var(--radius-xl);
+            background:
+                radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.28), transparent 26%),
+                linear-gradient(135deg, #1f6167 0%, #2d807e 38%, #d36b38 100%);
+            color: #fffaf0;
+            box-shadow: var(--shadow);
+            animation: rise 560ms ease-out;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: auto -15% -30% auto;
+            width: 220px;
+            aspect-ratio: 1;
+            border-radius: 999px;
+            background: rgba(255, 248, 232, 0.14);
+            filter: blur(8px);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255, 251, 243, 0.18);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+        }
+
+        h1 {
+            margin: 16px 0 12px;
+            font-size: clamp(2.05rem, 10vw, 3.5rem);
+            line-height: 1.08;
+        }
+
+        .hero p {
+            margin: 0;
+            line-height: 1.8;
+            font-size: 1rem;
+            color: rgba(255, 250, 240, 0.92);
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .hero-tags span {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 251, 243, 0.14);
+            border: 1px solid rgba(255, 251, 243, 0.18);
+            font-size: 0.92rem;
+        }
+
+        .guide,
+        .player-bar {
+            margin-top: 18px;
+            border-radius: var(--radius-lg);
+            background: var(--paper);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(14px);
+        }
+
+        .guide {
+            padding: 18px 18px 16px;
+            animation: rise 620ms ease-out;
+        }
+
+        .guide strong,
+        .player-copy strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            color: var(--accent-strong);
+            letter-spacing: 0.04em;
+        }
+
+        .guide p,
+        .player-copy p {
+            margin: 0;
+            line-height: 1.75;
+            color: var(--muted);
+        }
+
+        .player-bar {
+            position: sticky;
+            top: 12px;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 12px;
+            padding: 14px;
+            animation: rise 700ms ease-out;
+        }
+
+        .player-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .stop-button,
+        .jump-button,
+        .speech-block,
+        .fallback-link {
+            font: inherit;
+        }
+
+        .stop-button,
+        .jump-button,
+        .speech-block {
+            border: 0;
+            cursor: pointer;
+        }
+
+        .stop-button {
+            border-radius: 999px;
+            padding: 11px 16px;
+            background: var(--accent);
+            color: #fff7ee;
+            font-weight: 700;
+            min-width: 88px;
+            box-shadow: 0 14px 28px rgba(200, 91, 44, 0.2);
+        }
+
+        .stop-button[disabled] {
+            opacity: 0.45;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .jump-strip {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 4px 2px 6px;
+            margin: 18px -2px 0;
+            scrollbar-width: none;
+        }
+
+        .jump-strip::-webkit-scrollbar {
+            display: none;
+        }
+
+        .jump-button {
+            flex: 0 0 auto;
+            padding: 12px 14px;
+            border-radius: 999px;
+            background: rgba(255, 248, 237, 0.88);
+            border: 1px solid rgba(70, 56, 39, 0.12);
+            color: var(--ink);
+            box-shadow: 0 10px 24px rgba(70, 45, 20, 0.08);
+            transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+        }
+
+        .jump-button span {
+            display: block;
+            white-space: nowrap;
+        }
+
+        .jump-label {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .jump-title {
+            margin-top: 2px;
+            font-weight: 700;
+        }
+
+        .jump-button.active {
+            background: var(--teal);
+            color: #f6f6f0;
+            transform: translateY(-2px);
+        }
+
+        .jump-button.active .jump-label {
+            color: rgba(246, 246, 240, 0.78);
+        }
+
+        .lesson-list {
+            display: grid;
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .lesson-card {
+            border-radius: var(--radius-lg);
+            background: var(--paper);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            scroll-margin-top: 108px;
+            animation: rise 760ms ease-out;
+        }
+
+        .lesson-card[open] {
+            background: linear-gradient(180deg, rgba(255, 251, 243, 0.98), rgba(255, 248, 239, 0.96));
+            border-color: rgba(29, 106, 112, 0.24);
+        }
+
+        .lesson-card summary {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 18px;
+            cursor: pointer;
+        }
+
+        .lesson-card summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .lesson-chip {
+            display: inline-flex;
+            margin-bottom: 6px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent-strong);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .lesson-head h2 {
+            margin: 0;
+            font-size: clamp(1.4rem, 6vw, 2rem);
+            line-height: 1.2;
+        }
+
+        .lesson-head p {
+            margin: 6px 0 0;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .lesson-meta {
+            text-align: right;
+            flex: 0 0 auto;
+            display: grid;
+            gap: 6px;
+            justify-items: end;
+        }
+
+        .lesson-count,
+        .lesson-hint {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 10px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            white-space: nowrap;
+        }
+
+        .lesson-count {
+            background: var(--teal-soft);
+            color: var(--teal);
+            font-weight: 700;
+        }
+
+        .lesson-hint {
+            color: var(--muted);
+            border: 1px dashed rgba(70, 56, 39, 0.16);
+        }
+
+        .lesson-body {
+            padding: 0 18px 18px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .load-state,
+        .fallback-card {
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(70, 56, 39, 0.08);
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .fallback-link {
+            display: inline-flex;
+            margin-top: 10px;
+            color: var(--teal);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .section-card {
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(70, 56, 39, 0.08);
+        }
+
+        .section-card h3 {
+            margin: 0 0 12px;
+            font-size: 1.25rem;
+            line-height: 1.2;
+            color: var(--teal);
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .section-number::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: rgba(70, 56, 39, 0.18);
+        }
+
+        .section-blocks {
+            display: grid;
+            gap: 12px;
+        }
+
+        .speech-block {
+            width: 100%;
+            display: grid;
+            gap: 10px;
+            padding: 14px 14px 13px;
+            text-align: left;
+            color: inherit;
+            background: var(--paper-strong);
+            border: 1px solid rgba(70, 56, 39, 0.1);
+            border-radius: var(--radius-sm);
+            transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+            white-space: pre-wrap;
+            line-height: 1.78;
+            touch-action: manipulation;
+        }
+
+        .speech-block:hover,
+        .speech-block:focus-visible {
+            transform: translateY(-2px);
+            border-color: rgba(29, 106, 112, 0.22);
+            box-shadow: 0 14px 28px rgba(55, 39, 20, 0.08);
+            outline: none;
+        }
+
+        .speech-block.is-quote {
+            background: linear-gradient(180deg, rgba(29, 106, 112, 0.06), rgba(255, 248, 237, 0.96));
+        }
+
+        .speech-block.is-closing {
+            background: rgba(255, 248, 237, 0.65);
+            color: var(--muted);
+        }
+
+        .speech-block.is-playing {
+            border-color: rgba(200, 91, 44, 0.42);
+            background: linear-gradient(180deg, rgba(200, 91, 44, 0.08), rgba(255, 248, 237, 0.98));
+            box-shadow: 0 18px 34px rgba(200, 91, 44, 0.16);
+        }
+
+        .block-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            padding: 7px 11px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.86);
+            color: var(--accent-strong);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .block-text {
+            font-size: 1.02rem;
+        }
+
+        .hidden-frame {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            border: 0;
+        }
+
+        .page-footer {
+            margin-top: 26px;
+            text-align: center;
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 0.94rem;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                padding: 18px 12px 68px;
+            }
+
+            .hero {
+                padding: 24px 18px 22px;
+                border-radius: 24px;
+            }
+
+            .player-bar {
+                grid-template-columns: 1fr;
+            }
+
+            .player-actions {
+                justify-content: flex-end;
+            }
+
+            .lesson-card summary {
+                padding: 16px;
+                align-items: start;
+                flex-direction: column;
+            }
+
+            .lesson-meta {
+                width: 100%;
+                grid-auto-flow: column;
+                justify-content: start;
+                justify-items: start;
+            }
+
+            .lesson-body {
+                padding: 0 16px 16px;
+            }
+
+            .section-card {
+                padding: 14px;
+            }
+
+            .block-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header class="hero">
+            <span class="eyebrow">廣東話逐段點讀讀本</span>
+            <h1>一對一栽培手機版</h1>
+            <p>而家每課都改成手機容易睇嘅單頁。你撳任何一段，只會讀嗰一段，唔會一課一次過讀晒；聖經章節亦已經改成「章／節」格式，避免讀成時間。</p>
+            <div class="hero-tags">
+                <span>逐段朗讀</span>
+                <span>手機優先排版</span>
+                <span>章／節讀法</span>
+            </div>
+        </header>
+
+        <section class="guide" aria-label="使用說明">
+            <strong>點樣用</strong>
+            <p>先撳開一課，再撳你想聽嘅段落。上面嘅「停止」會即時停播；如果手機冇廣東話語音，網站會改用最接近嘅中文語音去讀。</p>
+        </section>
+
+        <section class="player-bar" aria-label="朗讀控制">
+            <div class="player-copy">
+                <strong>朗讀狀態</strong>
+                <p id="player-status">準備好。撳任何段落，就開始讀嗰一段。</p>
+            </div>
+            <div class="player-actions">
+                <button class="stop-button" id="stop-reading" type="button" disabled>停止</button>
+            </div>
+        </section>
+
+        <nav class="jump-strip" id="jump-strip" aria-label="課程捷徑"></nav>
+
+        <main class="lesson-list" id="lesson-list"></main>
+
+        <footer class="page-footer">
+            <p>一對一栽培廣東話讀本</p>
+        </footer>
+    </div>
+
+    <script>
+        const LESSONS = [
+            { id: "watershed", chip: "分水嶺", title: "壹、分水嶺", subtitle: "人生的好消息", file: "00_分水嶺_人生的好消息.txt" },
+            { id: "lesson-1", chip: "第一課", title: "第一課", subtitle: "神與我", file: "01_第一課_神與我.txt" },
+            { id: "lesson-2", chip: "第二課", title: "第二課", subtitle: "認識聖靈", file: "02_第二課_認識聖靈.txt" },
+            { id: "lesson-3", chip: "第三課", title: "第三課", subtitle: "教會與我", file: "03_第三課_教會與我.txt" },
+            { id: "lesson-4", chip: "第四課", title: "第四課", subtitle: "聆聽神說話", file: "04_第四課_聆聽神說話.txt" },
+            { id: "lesson-5", chip: "第五課", title: "第五課", subtitle: "神聽我禱告", file: "05_第五課_神聽我禱告.txt" },
+            { id: "lesson-6", chip: "第六課", title: "第六課", subtitle: "處理我的罪", file: "06_第六課_處理我的罪.txt" },
+            { id: "lesson-7", chip: "第七課", title: "第七課", subtitle: "作主的門徒", file: "07_第七課_作主的門徒.txt" }
+        ];
+
+        const lessonList = document.querySelector("#lesson-list");
+        const jumpStrip = document.querySelector("#jump-strip");
+        const playerStatus = document.querySelector("#player-status");
+        const stopButton = document.querySelector("#stop-reading");
+
+        const speechSupported = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+        let activeButton = null;
+        let activeCard = null;
+        let activeUtterance = null;
+
+        function setStatus(message) {
+            playerStatus.textContent = message;
+        }
+
+        function summarise(text) {
+            const condensed = text.replace(/\s+/g, " ").trim();
+            return condensed.length > 36 ? condensed.slice(0, 36) + "…" : condensed;
+        }
+
+        function normalizeText(text) {
+            return text.replace(/\r\n?/g, "\n").trim();
+        }
+
+        function looksLikeHeading(text) {
+            const clean = text.trim();
+            return /^(?:\d+\.|[A-Za-z]\.|[ivx]+\.)\s+/i.test(clean) && clean.length <= 28;
+        }
+
+        function parseLesson(raw) {
+            const paragraphs = normalizeText(raw)
+                .split("\n\n")
+                .map((item) => item.trim())
+                .filter(Boolean);
+
+            if (paragraphs[0] && paragraphs[0].startsWith("🎙️")) {
+                paragraphs.shift();
+            }
+
+            const sections = [];
+            let chunk = [];
+
+            function pushChunk() {
+                if (!chunk.length) {
+                    return;
+                }
+
+                const parts = [...chunk];
+                let title = "";
+
+                if (/^【.+】$/.test(parts[0])) {
+                    title = parts.shift().replace(/^【|】$/g, "");
+                } else if (parts.length > 1 && looksLikeHeading(parts[0])) {
+                    title = parts.shift();
+                }
+
+                sections.push({ title, blocks: parts });
+                chunk = [];
+            }
+
+            paragraphs.forEach((paragraph) => {
+                if (paragraph === "---") {
+                    pushChunk();
+                    return;
+                }
+
+                chunk.push(paragraph);
+            });
+
+            pushChunk();
+            return sections;
+        }
+
+        function blockKind(text) {
+            if (/^「/.test(text.trim())) {
+                return "is-quote";
+            }
+
+            if (/內容完。?$/.test(text.trim())) {
+                return "is-closing";
+            }
+
+            return "";
+        }
+
+        function cleanSpeechText(text) {
+            return text
+                .replace(/\n+/g, "，")
+                .replace(/⋯/g, "，")
+                .replace(/\s+/g, " ")
+                .trim();
+        }
+
+        function pickVoice() {
+            if (!speechSupported) {
+                return null;
+            }
+
+            const voices = window.speechSynthesis.getVoices();
+
+            return (
+                voices.find((voice) => /^(yue|zh-HK)/i.test(voice.lang)) ||
+                voices.find((voice) => /(cantonese|粵語|廣東話|香港)/i.test(`${voice.name} ${voice.lang}`)) ||
+                voices.find((voice) => /^zh/i.test(voice.lang)) ||
+                null
+            );
+        }
+
+        function resetActiveButton() {
+            if (activeButton) {
+                activeButton.classList.remove("is-playing");
+                activeButton.querySelector(".block-badge").textContent = "點一下朗讀";
+                activeButton.setAttribute("aria-pressed", "false");
+            }
+
+            activeButton = null;
+            activeUtterance = null;
+            stopButton.disabled = true;
+        }
+
+        function stopReading(message = "已停止朗讀。") {
+            if (!speechSupported) {
+                setStatus("呢部裝置未支援網頁朗讀，但你仍然可以照常閱讀。");
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+            resetActiveButton();
+            setStatus(message);
+        }
+
+        function speakText(text, button) {
+            if (!speechSupported) {
+                setStatus("呢部裝置未支援網頁朗讀，但你仍然可以照常閱讀。");
+                return;
+            }
+
+            const voice = pickVoice();
+            const utterance = new SpeechSynthesisUtterance(cleanSpeechText(text));
+            utterance.lang = voice ? voice.lang : "zh-HK";
+            utterance.voice = voice;
+            utterance.rate = 0.92;
+            utterance.pitch = 1;
+
+            if (activeButton === button) {
+                stopReading("已停止朗讀呢一段。");
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+            resetActiveButton();
+
+            activeButton = button;
+            activeUtterance = utterance;
+            button.classList.add("is-playing");
+            button.querySelector(".block-badge").textContent = "朗讀中";
+            button.setAttribute("aria-pressed", "true");
+            stopButton.disabled = false;
+
+            const voiceHint = voice && /^(yue|zh-HK)/i.test(voice.lang) ? "廣東話語音" : "中文語音";
+            setStatus(`正在讀：${summarise(text)}（${voiceHint}）`);
+
+            utterance.onend = () => {
+                if (activeUtterance !== utterance) {
+                    return;
+                }
+
+                resetActiveButton();
+                setStatus("讀完呢一段。再撳另一段就會繼續。");
+            };
+
+            utterance.onerror = () => {
+                if (activeUtterance !== utterance) {
+                    return;
+                }
+
+                resetActiveButton();
+                setStatus("朗讀未成功開始。你可以再撳一次試下。");
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function setActiveLesson(card) {
+            activeCard = card;
+
+            document.querySelectorAll(".jump-button").forEach((button) => {
+                const isActive = card && button.dataset.target === card.id;
+                button.classList.toggle("active", isActive);
+                button.setAttribute("aria-current", isActive ? "true" : "false");
+            });
+        }
+
+        function closeOtherLessons(currentCard) {
+            document.querySelectorAll(".lesson-card").forEach((card) => {
+                if (card !== currentCard) {
+                    card.open = false;
+                }
+            });
+        }
+
+        function renderFallback(body, lesson) {
+            body.innerHTML = `
+                <div class="fallback-card">
+                    呢部瀏覽器未能直接讀取文字檔。你可以先開原文，再返回此頁使用其他手機瀏覽器測試。
+                    <a class="fallback-link" href="${lesson.file}" target="_blank" rel="noreferrer">打開原文文字檔</a>
+                </div>
+            `;
+        }
+
+        function renderLessonBody(body, lesson, rawText) {
+            const sections = parseLesson(rawText);
+            body.innerHTML = "";
+
+            sections.forEach((section, index) => {
+                const sectionCard = document.createElement("section");
+                sectionCard.className = "section-card";
+
+                const number = document.createElement("div");
+                number.className = "section-number";
+                number.textContent = `段落 ${index + 1}`;
+                sectionCard.appendChild(number);
+
+                if (section.title) {
+                    const title = document.createElement("h3");
+                    title.textContent = section.title;
+                    sectionCard.appendChild(title);
+                }
+
+                const blockList = document.createElement("div");
+                blockList.className = "section-blocks";
+
+                section.blocks.forEach((text) => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = `speech-block ${blockKind(text)}`.trim();
+                    button.setAttribute("aria-pressed", "false");
+
+                    const badge = document.createElement("span");
+                    badge.className = "block-badge";
+                    badge.textContent = "點一下朗讀";
+
+                    const blockText = document.createElement("span");
+                    blockText.className = "block-text";
+                    blockText.textContent = text;
+
+                    button.append(badge, blockText);
+                    button.addEventListener("click", () => speakText(text, button));
+                    blockList.appendChild(button);
+                });
+
+                sectionCard.appendChild(blockList);
+                body.appendChild(sectionCard);
+            });
+
+            const blockCount = sections.reduce((total, section) => total + section.blocks.length, 0);
+            const countElement = body.closest(".lesson-card").querySelector(".lesson-count");
+            countElement.textContent = `${blockCount} 段可點讀`;
+        }
+
+        function loadLessonText(lesson) {
+            return new Promise((resolve, reject) => {
+                const frame = document.createElement("iframe");
+                frame.className = "hidden-frame";
+                frame.src = lesson.file;
+
+                frame.onload = () => {
+                    try {
+                        const doc = frame.contentDocument || frame.contentWindow.document;
+                        const text = (doc.body && (doc.body.innerText || doc.body.textContent) || "").trim();
+                        frame.remove();
+
+                        if (!text) {
+                            reject(new Error("empty"));
+                            return;
+                        }
+
+                        resolve(text);
+                    } catch (error) {
+                        frame.remove();
+                        reject(error);
+                    }
+                };
+
+                frame.onerror = () => {
+                    frame.remove();
+                    reject(new Error("load-failed"));
+                };
+
+                document.body.appendChild(frame);
+            });
+        }
+
+        function ensureLessonLoaded(card, lesson) {
+            const body = card.querySelector(".lesson-body");
+
+            if (card.dataset.loaded === "true" || card.dataset.loading === "true") {
+                return;
+            }
+
+            card.dataset.loading = "true";
+            body.innerHTML = `<div class="load-state">正在載入課文……</div>`;
+
+            loadLessonText(lesson)
+                .then((text) => {
+                    card.dataset.loaded = "true";
+                    renderLessonBody(body, lesson, text);
+                })
+                .catch(() => {
+                    renderFallback(body, lesson);
+                })
+                .finally(() => {
+                    delete card.dataset.loading;
+                });
+        }
+
+        function buildLessonCard(lesson, index) {
+            const card = document.createElement("details");
+            card.className = "lesson-card";
+            card.id = lesson.id;
+            card.open = index === 0;
+
+            const summary = document.createElement("summary");
+            summary.innerHTML = `
+                <div class="lesson-head">
+                    <span class="lesson-chip">${lesson.chip}</span>
+                    <h2>${lesson.subtitle}</h2>
+                    <p>${lesson.title}。撳開之後，課文會分拆成一段一段，每段都可以獨立朗讀。</p>
+                </div>
+                <div class="lesson-meta">
+                    <span class="lesson-count">未載入</span>
+                    <span class="lesson-hint">撳開閱讀</span>
+                </div>
+            `;
+
+            const body = document.createElement("div");
+            body.className = "lesson-body";
+            body.innerHTML = `<div class="load-state">撳開後會載入課文。</div>`;
+
+            card.append(summary, body);
+
+            card.addEventListener("toggle", () => {
+                if (card.open) {
+                    if (activeButton && !card.contains(activeButton)) {
+                        stopReading("已切換課程，朗讀已停止。");
+                    }
+
+                    closeOtherLessons(card);
+                    setActiveLesson(card);
+                    ensureLessonLoaded(card, lesson);
+                    return;
+                }
+
+                if (activeButton && card.contains(activeButton)) {
+                    stopReading("已收起課程，朗讀已停止。");
+                }
+
+                if (activeCard === card) {
+                    setActiveLesson(null);
+                }
+            });
+
+            return card;
+        }
+
+        function buildJumpButton(lesson, card) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "jump-button";
+            button.dataset.target = lesson.id;
+            button.innerHTML = `
+                <span class="jump-label">${lesson.chip}</span>
+                <span class="jump-title">${lesson.subtitle}</span>
+            `;
+
+            button.addEventListener("click", () => {
+                card.open = true;
+                closeOtherLessons(card);
+                setActiveLesson(card);
+                ensureLessonLoaded(card, lesson);
+                card.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+
+            return button;
+        }
+
+        LESSONS.forEach((lesson, index) => {
+            const card = buildLessonCard(lesson, index);
+            lessonList.appendChild(card);
+            jumpStrip.appendChild(buildJumpButton(lesson, card));
+        });
+
+        const firstOpenCard = document.querySelector(".lesson-card[open]");
+        if (firstOpenCard) {
+            const firstLesson = LESSONS.find((lesson) => lesson.id === firstOpenCard.id);
+            setActiveLesson(firstOpenCard);
+            ensureLessonLoaded(firstOpenCard, firstLesson);
+        }
+
+        if (!speechSupported) {
+            setStatus("呢部裝置未支援網頁朗讀，但你仍然可以照常閱讀。");
+        } else {
+            const initialVoice = pickVoice();
+            setStatus(
+                initialVoice && /^(yue|zh-HK)/i.test(initialVoice.lang)
+                    ? "準備好。已偵測到廣東話語音，撳任何段落就會開始讀。"
+                    : "準備好。未見專用廣東話語音，會用最接近嘅中文語音朗讀。"
+            );
+
+            window.speechSynthesis.onvoiceschanged = () => {
+                if (activeButton) {
+                    return;
+                }
+
+                const refreshedVoice = pickVoice();
+                setStatus(
+                    refreshedVoice && /^(yue|zh-HK)/i.test(refreshedVoice.lang)
+                        ? "準備好。已偵測到廣東話語音，撳任何段落就會開始讀。"
+                        : "準備好。未見專用廣東話語音，會用最接近嘅中文語音朗讀。"
+                );
+            };
+        }
+
+        stopButton.addEventListener("click", () => stopReading());
+
+        window.addEventListener("beforeunload", () => {
+            if (speechSupported) {
+                window.speechSynthesis.cancel();
+            }
+        });
+    </script>
+</body>
+
+</html>
