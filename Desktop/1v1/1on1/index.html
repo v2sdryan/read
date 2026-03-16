@@ -793,7 +793,10 @@
                 blockText.textContent = section.text;
 
                 button.append(badge, blockText);
-                button.addEventListener("click", () => speakText(section.text, button));
+                button.addEventListener("click", () => {
+                    const speechText = [section.title, section.text].filter(Boolean).join("\n\n");
+                    speakText(speechText, button);
+                });
 
                 sectionCard.append(title, button);
                 body.appendChild(sectionCard);
