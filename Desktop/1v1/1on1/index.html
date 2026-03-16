@@ -384,7 +384,7 @@
         }
 
         .section-title {
-            margin: 0;
+            display: block;
             padding: 15px 16px 14px;
             background: linear-gradient(135deg, #20313a 0%, #274651 100%);
             color: #fff8ed;
@@ -394,16 +394,21 @@
 
         .section-reader {
             width: 100%;
+            display: block;
+            padding: 0;
+            text-align: left;
+            color: inherit;
+            transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+            touch-action: manipulation;
+        }
+
+        .section-copy {
             display: grid;
             gap: 12px;
             padding: 16px;
-            text-align: left;
-            color: inherit;
             background: linear-gradient(180deg, rgba(255, 252, 246, 0.94), rgba(255, 247, 237, 0.92));
-            transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
             white-space: pre-wrap;
             line-height: 1.88;
-            touch-action: manipulation;
         }
 
         .section-reader:hover,
@@ -411,10 +416,14 @@
             transform: translateY(-2px);
             box-shadow: 0 14px 28px rgba(55, 39, 20, 0.08);
             outline: none;
+        }
+
+        .section-reader:hover .section-copy,
+        .section-reader:focus-visible .section-copy {
             background: linear-gradient(180deg, rgba(255, 253, 248, 1), rgba(255, 245, 232, 0.96));
         }
 
-        .section-reader.is-playing {
+        .section-reader.is-playing .section-copy {
             background: linear-gradient(180deg, rgba(200, 91, 44, 0.08), rgba(255, 248, 237, 0.98));
             box-shadow: 0 18px 34px rgba(200, 91, 44, 0.16);
         }
@@ -505,7 +514,7 @@
                 padding: 14px 14px 13px;
             }
 
-            .section-reader {
+            .section-copy {
                 padding: 14px;
             }
 
@@ -775,14 +784,17 @@
                 const sectionCard = document.createElement("section");
                 sectionCard.className = "section-card";
 
-                const title = document.createElement("h3");
-                title.className = "section-title";
-                title.textContent = section.title;
-
                 const button = document.createElement("button");
                 button.type = "button";
                 button.className = "section-reader";
                 button.setAttribute("aria-pressed", "false");
+
+                const title = document.createElement("span");
+                title.className = "section-title";
+                title.textContent = section.title;
+
+                const copy = document.createElement("span");
+                copy.className = "section-copy";
 
                 const badge = document.createElement("span");
                 badge.className = "block-badge";
@@ -792,13 +804,14 @@
                 blockText.className = "block-text";
                 blockText.textContent = section.text;
 
-                button.append(badge, blockText);
+                copy.append(badge, blockText);
+                button.append(title, copy);
                 button.addEventListener("click", () => {
                     const speechText = [section.title, section.text].filter(Boolean).join("\n\n");
                     speakText(speechText, button);
                 });
 
-                sectionCard.append(title, button);
+                sectionCard.append(button);
                 body.appendChild(sectionCard);
             });
 
