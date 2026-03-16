@@ -186,14 +186,14 @@
 
         .stop-button,
         .jump-button,
-        .speech-block,
+        .section-reader,
         .fallback-link {
             font: inherit;
         }
 
         .stop-button,
         .jump-button,
-        .speech-block {
+        .section-reader {
             border: 0;
             cursor: pointer;
         }
@@ -377,77 +377,44 @@
         }
 
         .section-card {
-            padding: 16px;
+            overflow: hidden;
             border-radius: var(--radius-md);
-            background: rgba(255, 255, 255, 0.55);
-            border: 1px solid rgba(70, 56, 39, 0.08);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(70, 56, 39, 0.1);
         }
 
-        .section-card h3 {
-            margin: 0 0 12px;
-            font-size: 1.25rem;
-            line-height: 1.2;
-            color: var(--teal);
+        .section-title {
+            margin: 0;
+            padding: 15px 16px 14px;
+            background: linear-gradient(135deg, #20313a 0%, #274651 100%);
+            color: #fff8ed;
+            font-size: clamp(1.14rem, 4.8vw, 1.42rem);
+            line-height: 1.25;
         }
 
-        .section-number {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            color: var(--muted);
-            font-size: 0.78rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        .section-number::before {
-            content: "";
-            width: 28px;
-            height: 1px;
-            background: rgba(70, 56, 39, 0.18);
-        }
-
-        .section-blocks {
-            display: grid;
-            gap: 12px;
-        }
-
-        .speech-block {
+        .section-reader {
             width: 100%;
             display: grid;
-            gap: 10px;
-            padding: 14px 14px 13px;
+            gap: 12px;
+            padding: 16px;
             text-align: left;
             color: inherit;
-            background: var(--paper-strong);
-            border: 1px solid rgba(70, 56, 39, 0.1);
-            border-radius: var(--radius-sm);
-            transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+            background: linear-gradient(180deg, rgba(255, 252, 246, 0.94), rgba(255, 247, 237, 0.92));
+            transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
             white-space: pre-wrap;
-            line-height: 1.78;
+            line-height: 1.88;
             touch-action: manipulation;
         }
 
-        .speech-block:hover,
-        .speech-block:focus-visible {
+        .section-reader:hover,
+        .section-reader:focus-visible {
             transform: translateY(-2px);
-            border-color: rgba(29, 106, 112, 0.22);
             box-shadow: 0 14px 28px rgba(55, 39, 20, 0.08);
             outline: none;
+            background: linear-gradient(180deg, rgba(255, 253, 248, 1), rgba(255, 245, 232, 0.96));
         }
 
-        .speech-block.is-quote {
-            background: linear-gradient(180deg, rgba(29, 106, 112, 0.06), rgba(255, 248, 237, 0.96));
-        }
-
-        .speech-block.is-closing {
-            background: rgba(255, 248, 237, 0.65);
-            color: var(--muted);
-        }
-
-        .speech-block.is-playing {
-            border-color: rgba(200, 91, 44, 0.42);
+        .section-reader.is-playing {
             background: linear-gradient(180deg, rgba(200, 91, 44, 0.08), rgba(255, 248, 237, 0.98));
             box-shadow: 0 18px 34px rgba(200, 91, 44, 0.16);
         }
@@ -534,7 +501,11 @@
                 padding: 0 16px 16px;
             }
 
-            .section-card {
+            .section-title {
+                padding: 14px 14px 13px;
+            }
+
+            .section-reader {
                 padding: 14px;
             }
 
@@ -548,11 +519,11 @@
 <body>
     <div class="page">
         <header class="hero">
-            <span class="eyebrow">廣東話逐段點讀讀本</span>
+            <span class="eyebrow">廣東話整段點讀讀本</span>
             <h1>一對一栽培手機版</h1>
-            <p>而家每課都改成手機容易睇嘅單頁。你撳任何一段，只會讀嗰一段，唔會一課一次過讀晒；聖經章節亦已經改成「章／節」格式，避免讀成時間。</p>
+            <p>而家每課都改成手機容易睇嘅單頁。每個深色大標題就係一整段內容，你一撳就會整段朗讀；聖經章節亦已經改成「章／節」格式，避免讀成時間。</p>
             <div class="hero-tags">
-                <span>逐段朗讀</span>
+                <span>整段朗讀</span>
                 <span>手機優先排版</span>
                 <span>章／節讀法</span>
             </div>
@@ -560,13 +531,13 @@
 
         <section class="guide" aria-label="使用說明">
             <strong>點樣用</strong>
-            <p>先撳開一課，再撳你想聽嘅段落。上面嘅「停止」會即時停播；如果手機冇廣東話語音，網站會改用最接近嘅中文語音去讀。</p>
+            <p>先撳開一課，再撳每個深色標題下面嗰整段內容。上面嘅「停止」會即時停播；如果手機冇廣東話語音，網站會改用最接近嘅中文語音去讀。</p>
         </section>
 
         <section class="player-bar" aria-label="朗讀控制">
             <div class="player-copy">
                 <strong>朗讀狀態</strong>
-                <p id="player-status">準備好。撳任何段落，就開始讀嗰一段。</p>
+                <p id="player-status">準備好。撳任何一節內容，就開始整段朗讀。</p>
             </div>
             <div class="player-actions">
                 <button class="stop-button" id="stop-reading" type="button" disabled>停止</button>
@@ -666,18 +637,6 @@
             return sections;
         }
 
-        function blockKind(text) {
-            if (/^「/.test(text.trim())) {
-                return "is-quote";
-            }
-
-            if (/內容完。?$/.test(text.trim())) {
-                return "is-closing";
-            }
-
-            return "";
-        }
-
         function cleanSpeechText(text) {
             return text
                 .replace(/\n+/g, "，")
@@ -704,7 +663,7 @@
         function resetActiveButton() {
             if (activeButton) {
                 activeButton.classList.remove("is-playing");
-                activeButton.querySelector(".block-badge").textContent = "點一下朗讀";
+                activeButton.querySelector(".block-badge").textContent = "點一下朗讀本段";
                 activeButton.setAttribute("aria-pressed", "false");
             }
 
@@ -738,7 +697,7 @@
             utterance.pitch = 1;
 
             if (activeButton === button) {
-                stopReading("已停止朗讀呢一段。");
+                stopReading("已停止朗讀呢一節。");
                 return;
             }
 
@@ -761,7 +720,7 @@
                 }
 
                 resetActiveButton();
-                setStatus("讀完呢一段。再撳另一段就會繼續。");
+                setStatus("讀完呢一節。再撳另一節就會繼續。");
             };
 
             utterance.onerror = () => {
@@ -804,53 +763,44 @@
         }
 
         function renderLessonBody(body, lesson, rawText) {
-            const sections = parseLesson(rawText);
+            const sections = parseLesson(rawText)
+                .map((section, index) => ({
+                    title: section.title || `第 ${index + 1} 段`,
+                    text: section.blocks.join("\n\n").trim()
+                }))
+                .filter((section) => section.text && !/內容完。?$/.test(section.text));
             body.innerHTML = "";
 
-            sections.forEach((section, index) => {
+            sections.forEach((section) => {
                 const sectionCard = document.createElement("section");
                 sectionCard.className = "section-card";
 
-                const number = document.createElement("div");
-                number.className = "section-number";
-                number.textContent = `段落 ${index + 1}`;
-                sectionCard.appendChild(number);
+                const title = document.createElement("h3");
+                title.className = "section-title";
+                title.textContent = section.title;
 
-                if (section.title) {
-                    const title = document.createElement("h3");
-                    title.textContent = section.title;
-                    sectionCard.appendChild(title);
-                }
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "section-reader";
+                button.setAttribute("aria-pressed", "false");
 
-                const blockList = document.createElement("div");
-                blockList.className = "section-blocks";
+                const badge = document.createElement("span");
+                badge.className = "block-badge";
+                badge.textContent = "點一下朗讀本段";
 
-                section.blocks.forEach((text) => {
-                    const button = document.createElement("button");
-                    button.type = "button";
-                    button.className = `speech-block ${blockKind(text)}`.trim();
-                    button.setAttribute("aria-pressed", "false");
+                const blockText = document.createElement("span");
+                blockText.className = "block-text";
+                blockText.textContent = section.text;
 
-                    const badge = document.createElement("span");
-                    badge.className = "block-badge";
-                    badge.textContent = "點一下朗讀";
+                button.append(badge, blockText);
+                button.addEventListener("click", () => speakText(section.text, button));
 
-                    const blockText = document.createElement("span");
-                    blockText.className = "block-text";
-                    blockText.textContent = text;
-
-                    button.append(badge, blockText);
-                    button.addEventListener("click", () => speakText(text, button));
-                    blockList.appendChild(button);
-                });
-
-                sectionCard.appendChild(blockList);
+                sectionCard.append(title, button);
                 body.appendChild(sectionCard);
             });
 
-            const blockCount = sections.reduce((total, section) => total + section.blocks.length, 0);
             const countElement = body.closest(".lesson-card").querySelector(".lesson-count");
-            countElement.textContent = `${blockCount} 段可點讀`;
+            countElement.textContent = `${sections.length} 段主題`;
         }
 
         function loadLessonText(lesson) {
@@ -920,7 +870,7 @@
                 <div class="lesson-head">
                     <span class="lesson-chip">${lesson.chip}</span>
                     <h2>${lesson.subtitle}</h2>
-                    <p>${lesson.title}。撳開之後，課文會分拆成一段一段，每段都可以獨立朗讀。</p>
+                    <p>${lesson.title}。撳開之後，每個深色標題都係一整段內容，可以整段朗讀。</p>
                 </div>
                 <div class="lesson-meta">
                     <span class="lesson-count">未載入</span>
@@ -998,7 +948,7 @@
             const initialVoice = pickVoice();
             setStatus(
                 initialVoice && /^(yue|zh-HK)/i.test(initialVoice.lang)
-                    ? "準備好。已偵測到廣東話語音，撳任何段落就會開始讀。"
+                    ? "準備好。已偵測到廣東話語音，撳任何一節內容就會開始讀。"
                     : "準備好。未見專用廣東話語音，會用最接近嘅中文語音朗讀。"
             );
 
@@ -1010,7 +960,7 @@
                 const refreshedVoice = pickVoice();
                 setStatus(
                     refreshedVoice && /^(yue|zh-HK)/i.test(refreshedVoice.lang)
-                        ? "準備好。已偵測到廣東話語音，撳任何段落就會開始讀。"
+                        ? "準備好。已偵測到廣東話語音，撳任何一節內容就會開始讀。"
                         : "準備好。未見專用廣東話語音，會用最接近嘅中文語音朗讀。"
                 );
             };
